@@ -1,7 +1,7 @@
 .main-bg{
   margin-bottom: 30px;
   height: 700px;
-  background-image: url(./image/waves.jpg);
+  background-image: url(../public/image/waves.jpg);
   background-size:100vw 70vh;
   background-position: top;
   background-attachment: scroll;
