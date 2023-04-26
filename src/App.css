@@ -56,3 +56,8 @@ text-shadow: 1px 10px blue;
     transform: rotate(360deg);
   }
 }
+
+.link {
+  color: #9b9d9e;
+  text-decoration: none;
+}
