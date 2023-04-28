@@ -5,10 +5,15 @@ import dataList from './dataList'
 import { useState} from 'react';
 import { Route,Routes,Link, useNavigate, Outlet } from 'react-router-dom';
 import CART from './cart'
+import axios from 'axios';
 
 function App() {
   let [items, setitems] = useState(dataList)
+  let [count, setCount] = useState(1)
+  let [loding, setLoding] = useState(false)
   let navigate = useNavigate()
+
+
 
 
 
@@ -33,23 +38,62 @@ function App() {
 
 
       <Routes>
-
       <Route path='/' element={<Main items={items}/>}/>
       <Route path='/cart/:id' element={<CART items={items}/>}/>
       {/* 404 페이지 만드는법!  */}
       <Route path='*' element={<div>404 ! </div>}/>
-
-      
             {/* Nested Routes 로 작성 시   */}
           {/* <Route path='/event' element={<Event/>}>
               <Route path='one' element={<div> 첫 주문시 양배추즙 서비스</div>}/>
               <Route path='two' element={<div>생일기념 쿠폰받기</div>}/>
-          </Route> */}
+            </Route> */}
 
             {/* 그냥 일반 Route로 작성 시  */}
           {/* <Route path='/event/one' element={<div></div>}/>
           <Route path='/event/two' element={<div></div>}/> */}
     </Routes>
+    {
+      loding ? <div>로딩 중</div> : null
+    }
+
+    {/* ajax로 데이터 받아오는 중엔 로딩 화면 보여주고 데이터를 다 받아오면 로딩 화면 가리기 */}
+          <button onClick={()=>{
+            setCount(count+1)
+            setLoding(true)
+            // 버튼 클릭 횟수에 따라 데이터 다르게 받아오기 
+            if(count === 1){
+           axios.get('https://codingapple1.github.io/shop/data2.json')
+           .then((data)=>{ 
+            let copy = [...items,...data.data]
+            console.log(copy)
+            setitems(copy)
+            setLoding(false)
+           })
+          }
+            if(count === 2){
+           axios.get('https://codingapple1.github.io/shop/data3.json')
+           .then((data)=>{ 
+            let copy = [...items,...data.data]
+            console.log(copy)
+            setitems(copy)
+            setLoding(false)
+           })
+          }
+          // 더이상 받아올 데이터가 없는 경우 
+          if(count >=3){
+            alert('더이상 상품이 없습니다.')
+            setLoding(false)
+          }
+
+          }}>버튼</button>
+
+          
+  
+
+
+
+
+
 
     </div>
   );
@@ -68,7 +112,7 @@ function Main ({items}){
             <div className='row'>
             {
               items.map((el,idx)=>{
-                return <Items key={el.id} el={el} i={idx+1}/>
+                return <Items key={el.id} el={el} i={idx}/>
               })
             }
             </div>

@@ -23,13 +23,7 @@ let data =[
       price : 130000,
     
     },
-    {
-      id : 3,
-      title : "ToKoy 룩",
-      content : "도쿄 씹어먹는 룩",
-      price : 130000,
-    
-    }
+   
   ] 
 
   export default data ;
