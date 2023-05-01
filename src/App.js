@@ -2,7 +2,7 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Container,Nav,Navbar } from 'react-bootstrap';
 import dataList from './dataList'
-import { useState} from 'react';
+import { useEffect, useState} from 'react';
 import { Route,Routes,Link, useNavigate, Outlet } from 'react-router-dom';
 import CART from './cart'
 import axios from 'axios';
@@ -11,8 +11,8 @@ function App() {
   let [items, setitems] = useState(dataList)
   let [count, setCount] = useState(1)
   let [loding, setLoding] = useState(false)
-  let navigate = useNavigate()
 
+  let navigate = useNavigate()
 
 
 
@@ -27,7 +27,7 @@ function App() {
           <Navbar.Brand href="#home">CoZy Shop</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={()=>{navigate('/')}}>HOME</Nav.Link>
-            <Nav.Link onClick={()=>{navigate('/cart')}} >CART </Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/cart/0');}} >CART </Nav.Link>
             <Nav.Link href="#CoZy_PRODUCT">CoZy PRODUCT</Nav.Link>
           </Nav>
         </Container>
@@ -38,7 +38,7 @@ function App() {
 
 
       <Routes>
-      <Route path='/' element={<Main items={items}/>}/>
+      <Route path='/' element={<Main items={items} count={count} setCount={setCount} loding={loding} setLoding={setLoding} setitems={setitems}/>}/>
       <Route path='/cart/:id' element={<CART items={items}/>}/>
       {/* 404 페이지 만드는법!  */}
       <Route path='*' element={<div>404 ! </div>}/>
@@ -52,11 +52,40 @@ function App() {
           {/* <Route path='/event/one' element={<div></div>}/>
           <Route path='/event/two' element={<div></div>}/> */}
     </Routes>
-    {
-      loding ? <div>로딩 중</div> : null
-    }
 
-    {/* ajax로 데이터 받아오는 중엔 로딩 화면 보여주고 데이터를 다 받아오면 로딩 화면 가리기 */}
+
+
+
+          
+    </div>
+  );
+}
+
+
+function Main ({items, count,setCount,loding,setLoding,setitems}){
+  return (
+    <> 
+              <div className='main-bg'>
+              <h2 className='title'>Hello!</h2>
+              <h2 className='title'>CoZy_Shop!</h2>
+            </div>
+
+            <div className='container' >
+            <div className='row'>
+            {
+              items.map((el,idx)=>{
+                return <Items key={el.id} el={el} i={idx}/>
+              })
+            }
+            </div>
+            </div>
+
+
+            {
+               loding ? <div>로딩 중</div> : null
+            } 
+
+              {/* ajax로 데이터 받아오는 중엔 로딩 화면 보여주고 데이터를 다 받아오면 로딩 화면 가리기 */}
           <button onClick={()=>{
             setCount(count+1)
             setLoding(true)
@@ -86,37 +115,6 @@ function App() {
           }
 
           }}>버튼</button>
-
-          
-  
-
-
-
-
-
-
-    </div>
-  );
-}
-
-
-function Main ({items}){
-  return (
-    <> 
-              <div className='main-bg'>
-              <h2 className='title'>Hello!</h2>
-              <h2 className='title'>CoZy_Shop!</h2>
-            </div>
-
-            <div className='container' >
-            <div className='row'>
-            {
-              items.map((el,idx)=>{
-                return <Items key={el.id} el={el} i={idx}/>
-              })
-            }
-            </div>
-            </div>
         </>
         )}
         

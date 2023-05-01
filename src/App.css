@@ -61,3 +61,12 @@ text-shadow: 1px 10px blue;
   color: #9b9d9e;
   text-decoration: none;
 }
+
+.start {
+  opacity: 0;
+}
+
+.end {
+  opacity: 1;
+  transition: opacity 0.9s;
+}

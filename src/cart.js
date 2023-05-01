@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import { Nav } from "react-bootstrap";
 
 // styled component 
 let YellowBtn = styled.button`
@@ -14,6 +15,8 @@ function Cart({items}) {
 let {id} = useParams();
 let [discount, setdiscount] = useState(true)
 let [iptValue, setiptValue] = useState('')
+let [tab, setTab] = useState(0)
+let [fade2, setFade2] = useState('')
 
 useEffect(()=>{
   setTimeout(()=>{
@@ -29,6 +32,15 @@ useEffect(()=>{
    }
 },[iptValue])
 
+useEffect(()=>{
+  setTimeout(()=>{
+    setFade2('end')
+  },500) 
+  return ()=>{
+    setFade2('')
+  }
+  }, [])
+
 // id가 동일한 것 탐색 이러면 정렬 시에도 id 가 동일한 것만 찾음
 let num = items.filter(el=> el.id === Number(id))
 
@@ -36,7 +48,7 @@ let num = items.filter(el=> el.id === Number(id))
 
 
 return (
-<>
+<div className={`start ${fade2}`}>
 
 <div className="container">
  
@@ -62,8 +74,51 @@ return (
     </div>
   </div>
 </div> 
-</>
+
+{/* 탭만들기  */}
+<Nav variant="tabs"  defaultActiveKey="link0" >
+    <Nav.Item>
+      <Nav.Link eventKey="link0" onClick={()=>{
+       setTab(0)
+      }}>버튼0</Nav.Link>
+    </Nav.Item>
+    
+    <Nav.Item>
+      <Nav.Link eventKey="link1"onClick={()=>{
+       setTab(1)
+      }}>버튼1</Nav.Link>
+    </Nav.Item>
+
+    <Nav.Item>
+      <Nav.Link eventKey="link2"onClick={()=>{
+       setTab(2)
+      }}>버튼2</Nav.Link>
+    </Nav.Item>
+</Nav>
+
+<TabComponent tab={tab}/>
+
+</div>
 )
+}
+
+
+
+function TabComponent({tab}){
+let [fade, setFade] =useState('')
+useEffect(()=>{
+setTimeout(()=>{
+  setFade('end')
+},500) 
+return ()=>{
+  setFade('')
+}
+}, [tab])
+
+let content = [<div className={`start ${fade}`}>내용0</div>,<div className={`start ${fade}`}>내용1</div>,<div className={`start ${fade}`}>내용2</div>]
+
+return content[tab]
+
 }
 
 export default Cart;
