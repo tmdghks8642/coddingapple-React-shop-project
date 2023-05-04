@@ -11,12 +11,14 @@ padding: 10px;
 `
 
 // 컴포넌트
-function Cart({items}) {
+function Item({items}) {
+
 let {id} = useParams();
 let [discount, setdiscount] = useState(true)
 let [iptValue, setiptValue] = useState('')
 let [tab, setTab] = useState(0)
 let [fade2, setFade2] = useState('')
+
 
 useEffect(()=>{
   setTimeout(()=>{
@@ -96,15 +98,13 @@ return (
     </Nav.Item>
 </Nav>
 
-<TabComponent tab={tab}/>
+<TabComponent tab={tab} items={items}/>
 
 </div>
 )
 }
 
-
-
-function TabComponent({tab}){
+function TabComponent({tab,items}){
 let [fade, setFade] =useState('')
 useEffect(()=>{
 setTimeout(()=>{
@@ -115,10 +115,10 @@ return ()=>{
 }
 }, [tab])
 
-let content = [<div className={`start ${fade}`}>내용0</div>,<div className={`start ${fade}`}>내용1</div>,<div className={`start ${fade}`}>내용2</div>]
+let content = [<div className={`start ${fade}`}>{items[0].title}</div>,<div className={`start ${fade}`}>내용1</div>,<div className={`start ${fade}`}>내용2</div>]
 
 return content[tab]
 
 }
 
-export default Cart;
+export default Item;

@@ -4,18 +4,15 @@ import { Button, Container,Nav,Navbar } from 'react-bootstrap';
 import dataList from './dataList'
 import { useEffect, useState} from 'react';
 import { Route,Routes,Link, useNavigate, Outlet } from 'react-router-dom';
-import CART from './cart'
+import Item from './pages/Item'
 import axios from 'axios';
+import Select from './pages/Select'
 
 function App() {
   let [items, setitems] = useState(dataList)
   let [count, setCount] = useState(1)
   let [loding, setLoding] = useState(false)
-
   let navigate = useNavigate()
-
-
-
 
 
 
@@ -27,7 +24,7 @@ function App() {
           <Navbar.Brand href="#home">CoZy Shop</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link onClick={()=>{navigate('/')}}>HOME</Nav.Link>
-            <Nav.Link onClick={()=>{navigate('/cart/0');}} >CART </Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/item/0');}} >Item </Nav.Link>
             <Nav.Link href="#CoZy_PRODUCT">CoZy PRODUCT</Nav.Link>
           </Nav>
         </Container>
@@ -39,7 +36,7 @@ function App() {
 
       <Routes>
       <Route path='/' element={<Main items={items} count={count} setCount={setCount} loding={loding} setLoding={setLoding} setitems={setitems}/>}/>
-      <Route path='/cart/:id' element={<CART items={items}/>}/>
+      <Route path='/item/:id' element={<Item items={items} />}/>
       {/* 404 페이지 만드는법!  */}
       <Route path='*' element={<div>404 ! </div>}/>
             {/* Nested Routes 로 작성 시   */}
@@ -51,10 +48,10 @@ function App() {
             {/* 그냥 일반 Route로 작성 시  */}
           {/* <Route path='/event/one' element={<div></div>}/>
           <Route path='/event/two' element={<div></div>}/> */}
+
+      <Route path='/select' element={<Select/>}/>
+
     </Routes>
-
-
-
 
           
     </div>
@@ -63,6 +60,9 @@ function App() {
 
 
 function Main ({items, count,setCount,loding,setLoding,setitems}){
+ 
+
+ 
   return (
     <> 
               <div className='main-bg'>
@@ -79,8 +79,6 @@ function Main ({items, count,setCount,loding,setLoding,setitems}){
             }
             </div>
             </div>
-
-
             {
                loding ? <div>로딩 중</div> : null
             } 
@@ -94,7 +92,6 @@ function Main ({items, count,setCount,loding,setLoding,setitems}){
            axios.get('https://codingapple1.github.io/shop/data2.json')
            .then((data)=>{ 
             let copy = [...items,...data.data]
-            console.log(copy)
             setitems(copy)
             setLoding(false)
            })
@@ -103,7 +100,6 @@ function Main ({items, count,setCount,loding,setLoding,setitems}){
            axios.get('https://codingapple1.github.io/shop/data3.json')
            .then((data)=>{ 
             let copy = [...items,...data.data]
-            console.log(copy)
             setitems(copy)
             setLoding(false)
            })
