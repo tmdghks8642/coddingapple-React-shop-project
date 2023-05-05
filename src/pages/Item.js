@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { Nav } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import {newItem} from '../store'
 
 // styled component 
 let YellowBtn = styled.button`
@@ -13,6 +15,14 @@ padding: 10px;
 // 컴포넌트
 function Item({items}) {
 
+  // 리덕스를 사용함에 있어 유즈디스패치는 다리역할! 옮겨주는 것 상태를 
+let dispatch = useDispatch(); 
+
+// 유즈셀렉터는 store 에 있는 상태를 가져올 때 사용하는 것 (현재 이 페이지에선 사용할 일 없음!)
+let state = useSelector((state)=>state)
+let cartitems  = state.cartitems
+
+// 유즈 파람스는 URL의 params items/0  /뒤에오는 문자,숫자를 가져올 수 있다
 let {id} = useParams();
 let [discount, setdiscount] = useState(true)
 let [iptValue, setiptValue] = useState('')
@@ -44,7 +54,7 @@ useEffect(()=>{
   }, [])
 
 // id가 동일한 것 탐색 이러면 정렬 시에도 id 가 동일한 것만 찾음
-let num = items.filter(el=> el.id === Number(id))
+let num = items.filter(el=> el.id === Number(id))[0]
 
 
 
@@ -53,7 +63,8 @@ return (
 <div className={`start ${fade2}`}>
 
 <div className="container">
- 
+
+ {/* 구매욕구 증가시키기 */}
   {
     discount ?  <div className="alert alert-warning">  2초 이내 구매시 할인 </div>: null
   }
@@ -69,10 +80,20 @@ return (
       <img src={`/image/IMG_${id}.jpeg`} width="70%" style={{borderRadius:'20px', marginTop:'10px'}}/>
     </div>
     <div className="col-md-6">
-      <h4 className="pt-5">{num[0].title}</h4>
-      <p>{num[0].content}</p>
-      <p>{num[0].price}원</p>
-      <button className="btn btn-danger">주문하기</button> 
+      <h4 className="pt-5">{num.title}</h4>
+      <p>{num.content}</p>
+      <p>{num.price}원</p>
+      <button className="btn btn-danger"
+      onClick={()=>{
+        let plusItem = {
+          id : num.id+3,
+          name : num.title,
+           count : 1};
+
+         dispatch(newItem(plusItem))
+      }}
+      
+      >주문하기</button> 
     </div>
   </div>
 </div> 

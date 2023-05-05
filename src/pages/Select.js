@@ -1,15 +1,19 @@
 
 import { Table } from "react-bootstrap"
-import { useSelector } from "react-redux";
-
+import { useDispatch, useSelector } from "react-redux";
+import { newCount } from "../store";
 
 function Select (){
+let dispatch = useDispatch();
+let state = useSelector((state)=>{return state})
 
-let cartitems = useSelector((state)=>{return state.cartitems})
 
-console.log(cartitems)
 return (
 <div>
+  <button onClick={()=>{
+    console.log(state)
+  }}>버튼</button>
+ 
 <Table>
   <thead>
     <tr>
@@ -19,19 +23,25 @@ return (
       <th>변경하기</th>
     </tr>
   </thead>
+  <tbody >
+    {/* Redux 를 이용해 상태를 store 에 저장하고 가져다 쓰기 */}
   {
-   cartitems.map((el,idx)=>(
-      <tbody key={el.id}>
-    <tr>
+   state.cartitems.map((element,idx)=>(
+    <tr key={element.id}>
       <td>{idx+1}</td>
-      <td>{el.name}</td>
-      <td>{el.count}</td>
-      <td>클릭하십셔</td>
+      <td>{element.name}</td>
+      <td>{element.count}</td>
+      <td>  <button onClick={(e)=>{
+    // Redux 를 이용해 상태를 변경하는 함수 만들고 클릭시 상태 변경함수 호출해서 상태 변경하기 
+      let newArr = state.cartitems.filter(el => el.id === element.id)[0]
+          dispatch(newCount(newArr))
+      }}>+</button></td>
+    
     </tr>
-  </tbody>
 
-   ))
-  }
+))
+}
+</tbody>
   
 </Table> 
 

@@ -25,6 +25,7 @@ function App() {
           <Nav className="me-auto">
             <Nav.Link onClick={()=>{navigate('/')}}>HOME</Nav.Link>
             <Nav.Link onClick={()=>{navigate('/item/0');}} >Item </Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/select');}} >Select </Nav.Link>
             <Nav.Link href="#CoZy_PRODUCT">CoZy PRODUCT</Nav.Link>
           </Nav>
         </Container>
@@ -35,10 +36,14 @@ function App() {
 
 
       <Routes>
-      <Route path='/' element={<Main items={items} count={count} setCount={setCount} loding={loding} setLoding={setLoding} setitems={setitems}/>}/>
+      <Route path='/' element={<Main items={items} count={count} 
+      setCount={setCount} loding={loding} setLoding={setLoding} setitems={setitems}/>}/>
       <Route path='/item/:id' element={<Item items={items} />}/>
+      <Route path='/select' element={<Select/>}/>
       {/* 404 페이지 만드는법!  */}
       <Route path='*' element={<div>404 ! </div>}/>
+
+
             {/* Nested Routes 로 작성 시   */}
           {/* <Route path='/event' element={<Event/>}>
               <Route path='one' element={<div> 첫 주문시 양배추즙 서비스</div>}/>
