@@ -6,7 +6,7 @@ import { useEffect, useState} from 'react';
 import { Route,Routes,Link, useNavigate, Outlet } from 'react-router-dom';
 import Item from './pages/Item'
 import axios from 'axios';
-import Select from './pages/Select'
+import Cart from './pages/Cart'
 
 function App() {
   let [items, setitems] = useState(dataList)
@@ -21,11 +21,10 @@ function App() {
 
     <Navbar bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="#home">CoZy Shop</Navbar.Brand>
+          <Navbar.Brand className='homepage' onClick={()=>{navigate('/')}}>CoZy Shop</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link onClick={()=>{navigate('/')}}>HOME</Nav.Link>
             <Nav.Link onClick={()=>{navigate('/item/0');}} >Item </Nav.Link>
-            <Nav.Link onClick={()=>{navigate('/select');}} >Select </Nav.Link>
+            <Nav.Link onClick={()=>{navigate('/Cart');}} >Cart </Nav.Link>
             <Nav.Link href="#CoZy_PRODUCT">CoZy PRODUCT</Nav.Link>
           </Nav>
         </Container>
@@ -39,7 +38,7 @@ function App() {
       <Route path='/' element={<Main items={items} count={count} 
       setCount={setCount} loding={loding} setLoding={setLoding} setitems={setitems}/>}/>
       <Route path='/item/:id' element={<Item items={items} />}/>
-      <Route path='/select' element={<Select/>}/>
+      <Route path='/Cart' element={<Cart/>}/>
       {/* 404 페이지 만드는법!  */}
       <Route path='*' element={<div>404 ! </div>}/>
 
@@ -53,8 +52,6 @@ function App() {
             {/* 그냥 일반 Route로 작성 시  */}
           {/* <Route path='/event/one' element={<div></div>}/>
           <Route path='/event/two' element={<div></div>}/> */}
-
-      <Route path='/select' element={<Select/>}/>
 
     </Routes>
 
@@ -114,7 +111,7 @@ function Main ({items, count,setCount,loding,setLoding,setitems}){
             alert('더이상 상품이 없습니다.')
             setLoding(false)
           }
-
+            console.log(items)
           }}>버튼</button>
         </>
         )}

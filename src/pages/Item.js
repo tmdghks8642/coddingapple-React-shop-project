@@ -91,6 +91,7 @@ return (
            count : 1};
 
          dispatch(newItem(plusItem))
+         alert('장바구니에 담겼습니다.!')
       }}
       
       >주문하기</button> 

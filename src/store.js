@@ -19,14 +19,27 @@ let cartitems = createSlice({
       }
 })
 
+let user =createSlice({
+    name : 'user',
+    initialState: 'lee',
+
+    reducers : {
+        changename(state){
+            return state = 'kim'
+        }
+    }
+
+})
 
 
 
 
 export let {newCount, newItem} = cartitems.actions
+export let {changename} = user.actions
 
 export default configureStore({
     reducer: {
         cartitems : cartitems.reducer,
+        user : user.reducer,
     }
 })

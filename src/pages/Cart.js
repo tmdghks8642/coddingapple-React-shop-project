@@ -1,17 +1,18 @@
 
 import { Table } from "react-bootstrap"
 import { useDispatch, useSelector } from "react-redux";
-import { newCount } from "../store";
+import { changename,newCount } from "../store";
 
-function Select (){
+function Cart (){
 let dispatch = useDispatch();
 let state = useSelector((state)=>{return state})
 
 
 return (
 <div>
+  <h2>{state.user}장바구니</h2>
   <button onClick={()=>{
-    console.log(state)
+    dispatch(changename())
   }}>버튼</button>
  
 <Table>
@@ -50,4 +51,4 @@ return (
 
 }
 
-export default Select;
+export default Cart;
