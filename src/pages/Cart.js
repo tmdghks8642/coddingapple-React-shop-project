@@ -10,11 +10,8 @@ let state = useSelector((state)=>{return state})
 
 return (
 <div>
-  <h2>{state.user}장바구니</h2>
-  <button onClick={()=>{
-    dispatch(changename())
-  }}>버튼</button>
- 
+  <h2>장바구니</h2>
+
 <Table>
   <thead>
     <tr>

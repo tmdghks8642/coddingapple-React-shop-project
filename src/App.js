@@ -14,6 +14,14 @@ function App() {
   let [loding, setLoding] = useState(false)
   let navigate = useNavigate()
 
+// 로컬 스토리지에 데이터가 남아 있으면 놔두고 없는 경우 리셋
+ useEffect(()=>{
+  if(JSON.parse(localStorage.getItem('watched')).length === 0){
+  localStorage.setItem('watched',JSON.stringify([ ]))
+  }else {
+    console.log('로컬스토리지에 데이터가 남아 있습니다.')
+  }
+ },[])
 
 
   return (
@@ -55,6 +63,7 @@ function App() {
 
     </Routes>
 
+          <div> 방금 본 상품</div>
           
     </div>
   );
@@ -76,7 +85,7 @@ function Main ({items, count,setCount,loding,setLoding,setitems}){
             <div className='row'>
             {
               items.map((el,idx)=>{
-                return <Items key={el.id} el={el} i={idx}/>
+                return <Items key={el.id} el={el} i={idx} />
               })
             }
             </div>
@@ -117,15 +126,30 @@ function Main ({items, count,setCount,loding,setLoding,setitems}){
         )}
         
  function Items ({el,i}) { 
-          return (
+  let navigate =useNavigate() 
+
+
+      return (
             <div className='col-md-4' >
           {/* 이미지 경로 설정하는 법 */}
-          <img src={'/image/IMG_'+i+'.jpeg'} width={`80%`} height={'70%'} style={{borderRadius:'20px'}}/>
+          <img src={'/image/IMG_'+i+'.jpeg'} width={`80%`} height={'70%'} style={{borderRadius:'20px'}} onClick={()=>{
+            navigate(`/item/${i}`)
+            // 사진  클릭 시 로컬스토리지에 해당 상품 id 저장하기
+          let storage = JSON.parse(localStorage.getItem('watched'))
+          //중복은 제거
+             if(!storage.includes(el.id)){
+              storage.push(el.id)
+             }
+            localStorage.setItem('watched', JSON.stringify(storage))
+             
+          }}/>
           <h4>{el.title}</h4>
           <p>{el.content}</p>
           <p>가격 : {el.price}</p>
         </div>
-)}
+      )}
+
+
 
 // 예시
 function Event (){

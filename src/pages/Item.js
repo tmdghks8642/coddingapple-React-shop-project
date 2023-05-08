@@ -88,7 +88,7 @@ return (
         let plusItem = {
           id : num.id+3,
           name : num.title,
-           count : 1};
+          count : 1};
 
          dispatch(newItem(plusItem))
          alert('장바구니에 담겼습니다.!')
@@ -126,8 +126,10 @@ return (
 )
 }
 
+
 function TabComponent({tab,items}){
 let [fade, setFade] =useState('')
+
 useEffect(()=>{
 setTimeout(()=>{
   setFade('end')
